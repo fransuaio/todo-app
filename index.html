@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.js grid component example</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
+    <link href="dist/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="dist/iconsStyle.css">
+    <link rel="stylesheet" type="text/css" href="dist/mainButtons.css">
+  </head>
+  <body>  
+    <div class="space"></div>
+    <div class="container">      
+      <div class="row" id="bt">
+        <div class="col-12 col-sm-6 col-lg-8" style="margin-top: 1rem">
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="newTask" v-model="newTask" @keyup.enter="insert">
+          </div>
+        </div>
+        
+        <div class="col-6 col-lg-4">
+        
+        <!--
+          <div class="input-group mb-2" style="margin-left: 9em">
+            <button id ='asd' class=" btn btn-primary button-panel" @click="insert">
+              <i class="icon ion-android-add-circle size-24"></i>
+            </button>                              
+            <button class="btn btn-secondary btn-danger button-panel" @click="remove">
+              <i class="icon ion-android-cancel size-24"></i>
+            </button>
+            <button class="btn btn-success button-panel" @click="reset">
+              <i class="icon ion-android-list size-24"></i>                  
+            </button>            
+          </div>
+        </div>
+      -->
+      </div>      
+    </div>
+
+    <div class="container" id="demo">
+      <demo-grid :data="gridData" 
+                 :columns="gridColumns" 
+                 :filter-key="newTask"
+                 :st="status">
+      </demo-grid>        
+    </div>
+
+   <script type="text/x-template" id="grid-template">
+    <div class="container">
+      <div class="space"></div>
+      <table class="table" v-if="filteredData.length">
+        <thead class="thead" style="background-color: #20c997">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Task</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr v-for="entry in filteredData">
+            <td v-for="key in columns">                            
+              {{entry[key]}}
+            </td>
+            <div>              
+              <td>
+                <button class="btn btn-secondary btn-danger del" @click="rmTask(entry.task)">
+                  <i class="icon ion-android-cancel size-16"></i>
+                </button>
+              </td>
+              <td>
+                <button  class="btn btn-secondary btn-success del" @click="addTask(entry.task)">
+                  <i class="icon ion-android-checkbox size-16"></i>
+                </button>
+              </td>
+            </div>
+          </tr>
+        </tbody>
+      </table>      
+      <div class="row">
+        <div class="col-4"><button class="btn-block btn btn-danger" @click="showAllDeletedTask"><strong>Deleted task</strong></button></div>
+       <div class="col-4"><button class="btn-block btn btn-primary" @click="active"><strong>Activated task</strong></button></div>
+       <div class="col-4"><button class="btn-block btn btn-success" @click="showAllCompletedTask"><strong>Completed task </strong></button></div>
+      </div>
+      <p v-if="filteredData">Nothings to show</p>
+    </div>
+  
+      </div>
+    </script>    
+    <script src="vueMagic.js"></script>
+  </body>
+</html>
